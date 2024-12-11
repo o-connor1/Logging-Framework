@@ -10,7 +10,7 @@
         {
             this.loggerStrategy = loggerStrategy;
         }
-        public LoggingManager getInstance(LoggerStrategy loggerStrategy) 
+        public static LoggingManager getInstance(LoggerStrategy loggerStrategy) 
         {
             if(instance == null)
             {
