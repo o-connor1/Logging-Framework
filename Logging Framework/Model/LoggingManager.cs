@@ -1,18 +1,16 @@
 ﻿namespace Logging_Framework.Model
 {
-    public class LoggingManager: IOutputDestination
+    public class LoggingManager
     {
         private static LoggingManager instance;
         private static readonly object lockObject = new object();
-        private IOutputDestination outputDestination;
-        private LogLevel logLevel;
+        private LoggerStrategy loggerStrategy;
 
-        private LoggingManager(IOutputDestination destination, LogLevel logLevel)
+        private LoggingManager(LoggerStrategy loggerStrategy)
         {
-            this.outputDestination = destination;
-            this.logLevel = logLevel;
+            this.loggerStrategy = loggerStrategy;
         }
-        public LoggingManager getInstance(IOutputDestination destination, LogLevel logLevel) 
+        public LoggingManager getInstance(LoggerStrategy loggerStrategy) 
         {
             if(instance == null)
             {
@@ -20,7 +18,7 @@
                 {
                     if (instance == null)
                     {
-                        instance = new LoggingManager(destination,logLevel);
+                        instance = new LoggingManager(loggerStrategy);
                     }
                 }
             }
@@ -33,7 +31,7 @@
             {
                 return;
             }
-            this.outputDestination.Info(message);
+            this.loggerStrategy.write(message);
         }
         public void Debug(string message)
         {
@@ -41,7 +39,11 @@
             {
                 return;
             }
-            this.outputDestination.Debug(message);
+            if (this.loggerStrategy.getLogLevel() != LogLevel.Debug)
+            {
+                return;
+            }
+            this.loggerStrategy.write(message);
         }
         public void Warn(string message)
         {
@@ -49,7 +51,7 @@
             {
                 return;
             }
-            this.outputDestination.Warn(message);
+            this.loggerStrategy.write(message);
         }
         public void Error(string message)
         {
@@ -57,7 +59,7 @@
             {
                 return;
             }
-            this.outputDestination.Error(message);
+            this.loggerStrategy.write(message);
         }
         public void Fatal(string message)
         {
@@ -65,7 +67,7 @@
             {
                 return;
             }
-            this.outputDestination.Fatal(message);
+            this.loggerStrategy.write(message);
         }
     }
 

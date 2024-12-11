@@ -1,33 +1,17 @@
 ﻿namespace Logging_Framework.Model
 {
-    public class Console : IOutputDestination
+    public class Console : LoggerStrategy
     {
-        public Console()
+        public Console(LogLevel level, string connectionString) : base(level, connectionString)
         {
         }
 
-        public void Info(string message)
+        public override void write(string message)
         {
-            //implementation
-        }
-
-        public void Debug(string message)
-        {
-            //implementation
-        }
-
-        public void Warn(string message)
-        {
-            //implementation
-        }
-
-        public void Error(string message)
-        {
-            //implementation
-        }
-
-        public void Fatal(string message)
-        {
+            if (string.IsNullOrEmpty(message))
+            {
+                return;
+            }
             //implementation
         }
     }

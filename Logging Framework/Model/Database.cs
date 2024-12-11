@@ -1,36 +1,18 @@
 ﻿namespace Logging_Framework.Model
 {
-    public class Database: IOutputDestination
+    public class Database: LoggerStrategy
     {
-        private readonly string connectionString;
 
-        public Database(string connectionString)
+        public Database(LogLevel level, string connectionString) : base(level, connectionString)
         {
-            this.connectionString = connectionString;
         }
 
-        public void Info(string message)
+        public override void write(string message)
         {
-            //implementation
-        }
-
-        public void Debug(string message)
-        {
-            //implementation
-        }
-
-        public void Warn(string message)
-        {
-            //implementation
-        }
-
-        public void Error(string message)
-        {
-            //implementation
-        }
-
-        public void Fatal(string message)
-        {
+            if (string.IsNullOrEmpty(message))
+            {
+                return;
+            }
             //implementation
         }
     }

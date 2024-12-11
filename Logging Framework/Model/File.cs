@@ -1,36 +1,19 @@
 ﻿namespace Logging_Framework.Model
 {
-    public class File: IOutputDestination
+    public class File: LoggerStrategy
     {
         private readonly string _name;
 
-        public File(string path)
+        public File(LogLevel level, string connectionString) : base(level, connectionString)
         {
-            this._name = path;
         }
 
-        public void Info(string message)
+        public override void write(string message)
         {
-            //implementation
-        }
-
-        public void Debug(string message)
-        {
-            //implementation
-        }
-
-        public void Warn(string message)
-        {
-            //implementation
-        }
-
-        public void Error(string message)
-        {
-            //implementation
-        }
-
-        public void Fatal(string message)
-        {
+            if (string.IsNullOrEmpty(message))
+            {
+                return;
+            }
             //implementation
         }
     }
